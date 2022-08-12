@@ -14,19 +14,16 @@ const app = express();
 
 mongoose.connect('mongodb://localhost:27017/finalDB');
 
-
 require('dotenv').config();
 
-// console.log(process.env.NODE_ENV);
-
 // include these before other routes
-// app.use(cors());
-// app.options('*', cors());
+app.use(cors());
+app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(requestLogger); // enabling the request logger
+app.use(requestLogger); // enabling the request logger
 
 app.use('/', require('./routes/users'));
 app.use('/', require('./routes/articles'));

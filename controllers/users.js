@@ -1,5 +1,5 @@
-const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 
 // ////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ module.exports.login = (req, res, next) => {
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        // throw      new NotFoundError('No user with matching ID found');
+        throw new NotFoundError('No user with matching ID found');
       }
       return bcrypt.compare(password, user.password);
     })
