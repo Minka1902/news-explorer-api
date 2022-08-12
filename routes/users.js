@@ -14,3 +14,5 @@ router.post('/users', celebrate({
     password: Joi.string().required().min(8),
   }),
 }), createUser);
+
+module.exports = router;

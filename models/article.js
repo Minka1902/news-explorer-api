@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const isURL = require('validator/lib/isURL');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -25,21 +26,22 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator(v) {
-        return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(v);
-      },
-      message: (props) => `${props.value} is not a valid link!`,
+      validator: isURL,
+      message: 'Invalid URL.',
     },
   },
   image: {
     type: String,
     required: true,
+    validate: {
+      validator: isURL,
+      message: 'Invalid URL.',
+    },
   },
-  owner: { // ! owner's _id
-    default: '1',
+  owner: {
+    type: mongoose.Types.ObjectId,
+    select: false,
   },
 });
 
-const Article = mongoose.model('article', articleSchema);
-
-module.exports = Article;
+module.exports = mongoose.model('articles', articleSchema);

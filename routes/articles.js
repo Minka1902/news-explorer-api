@@ -35,3 +35,5 @@ router.put('/articles', celebrate({
     link: Joi.string().uri(),
   }),
 }), saveArticle);
+
+module.exports = router;

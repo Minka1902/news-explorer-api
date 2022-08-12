@@ -11,20 +11,22 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 // connect to the MongoDB server
-mongoose.connect('mongodb://localhost:27017/aroundb');
+
+mongoose.connect('mongodb://localhost:27017/finalDB');
+
 
 require('dotenv').config();
 
 // console.log(process.env.NODE_ENV);
 
 // include these before other routes
-app.use(cors());
-app.options('*', cors());
+// app.use(cors());
+// app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(requestLogger); // enabling the request logger
+// app.use(requestLogger); // enabling the request logger
 
 app.use('/', require('./routes/users'));
 app.use('/', require('./routes/articles'));
