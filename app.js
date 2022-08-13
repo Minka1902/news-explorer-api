@@ -11,12 +11,9 @@ const { PORT = 3000, MONGO_URI = 'mongodb://localhost:27017/finalDB' } = process
 const app = express();
 
 // connect to the MongoDB server
-
 mongoose.connect(MONGO_URI)
-  .then(() => {
-    console.log('Connection successful!');
-  }).catch((err) => {
-    console.log('Connection failed! ' + err);
+  .catch((err) => {
+    console.log(err);
   });
 
 require('dotenv').config();

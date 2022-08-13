@@ -59,7 +59,7 @@ module.exports.login = (req, res, next) => {
 // ? req.body = {id: "user ID"}
 module.exports.getCurrentUser = (req, res) => {
   User.findById(req.body.id)
-  .orFail()
-  .then(user => res.send({ data: user }))
-  .catch(err => res.status(500).send({ message: err }));
+    .orFail()
+    .then((user) => res.send({ data: user }))
+    .catch((err) => res.status(500).send({ message: err }));
 };

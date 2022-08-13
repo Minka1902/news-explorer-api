@@ -15,7 +15,7 @@ router.post('/articles', celebrate({
     source: Joi.string().required(),
     link: Joi.string().required().uri(),
     image: Joi.string().required().uri(),
-    owner: Joi.string().required()
+    owner: Joi.string().required(),
   }),
 }), createArticle);
 
