@@ -7,12 +7,17 @@ const { Joi, errors, celebrate } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const { login, createUser } = require('./controllers/users');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, MONGO_URI = 'mongodb://localhost:27017/finalDB' } = process.env;
 const app = express();
 
 // connect to the MongoDB server
 
-mongoose.connect('mongodb://localhost:27017/finalDB');
+mongoose.connect(MONGO_URI)
+  .then(() => {
+    console.log('Connection successful!');
+  }).catch((err) => {
+    console.log('Connection failed! ' + err);
+  });
 
 require('dotenv').config();
 
@@ -37,7 +42,9 @@ app.post('/signin', celebrate({
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email(),
+    username: Joi.string().required().min(2)
+      .max(30),
+    email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   }),
 }), createUser);
