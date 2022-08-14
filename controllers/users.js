@@ -20,7 +20,11 @@ module.exports.createUser = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(400).send(err);
       } else {
-        res.status(500).send(err);
+        if(err.name = "MongoServerError"){
+          res.status(409).send(err);
+        } else {
+          res.status(500).send(err);
+        }
       }
     });
 };
@@ -49,7 +53,11 @@ module.exports.login = (req, res, next) => {
       // successful authentication
       return res.send({ message: 'Everything good!' });
     })
-    .catch(next);
+    .catch((err) => {
+      if(err.name == "Unauthorized "){
+        res.status(401).send({ message: 'your email or password is incorrect.' })
+      }
+    });
 };
 
 // ////////////////////////////////////////////////////////////////

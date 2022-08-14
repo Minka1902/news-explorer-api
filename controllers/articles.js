@@ -7,10 +7,10 @@ const { checkError } = require('../errors/ErrorHandler');
 // ! request structure
 // ? req.body = {articleId: "article ID"}
 module.exports.deleteArticle = (req, res) => {
-  Article.findByIdAndRemove(req.body.articleId)
+  Article.findByIdAndRemove(req.params.id)
     .orFail()
     .then((article) => {
-      if (req.user._id === article.owner) {
+      if (req.user._id.toString() === article.owner) {
         res.send({ data: article });
       } else {
         res.status(403).send({ message: 'Error, unable to delete the article!' });
