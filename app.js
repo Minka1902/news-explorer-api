@@ -7,11 +7,11 @@ const { Joi, errors, celebrate } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const { login, createUser } = require('./controllers/users');
 
-const { PORT = 3000, MONGO_URI = 'mongodb://localhost:27017/finalDB' } = process.env;
+const { PORT = 3000, MONGODB_URI = 'mongodb://localhost:27017/finalDB' } = process.env;
 const app = express();
 
 // connect to the MongoDB server
-mongoose.connect(MONGO_URI)
+mongoose.connect(MONGODB_URI)
   .catch((err) => {
     console.log(err);
   });
