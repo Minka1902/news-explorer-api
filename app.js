@@ -19,8 +19,8 @@ mongoose.connect(MONGODB_URI)
 require('dotenv').config();
 
 // include these before other routes
-app.use(cors());
 app.options('*', cors());
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
