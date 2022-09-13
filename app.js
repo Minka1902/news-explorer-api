@@ -22,7 +22,7 @@ require('dotenv').config();
 app.options('*', cors());
 app.use(cors());
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger); // enabling the request logger
