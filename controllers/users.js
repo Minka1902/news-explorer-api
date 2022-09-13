@@ -7,7 +7,7 @@ const NotFoundError = require('../errors/NotFoundError');
 // email, password, and name in the body
 // POST /signup
 module.exports.createUser = (req, res) => {
-  console.log("Create user Function");
+  console.log('Create user Function');
   const { email, password, username } = req.body;
 
   User.create({ email, password, username })
@@ -35,7 +35,7 @@ module.exports.createUser = (req, res) => {
 // and returns a JWT
 // POST /signin
 module.exports.login = (req, res, next) => {
-  console.log("Login Function");
+  console.log('Login Function');
   const { email, password } = req.body;
 
   User.findOne({ email }).select('+password')
@@ -60,9 +60,21 @@ module.exports.login = (req, res, next) => {
 // returns information about the logged-in user (email and name)
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
-  console.log("Get current user Function");
+  console.log('Get current user Function');
   User.find()
     .orFail()
-    .then((users) => res.send({ data: users }))
+    .then((data) => {
+      const indexArray = [];
+      for (let i = 0; i < data.length; i += 1) {
+        if (req.email === data[i]) {
+          indexArray[indexArray.length] = i;
+        }
+      }
+      if (indexArray.length === 0) {
+        res.send({ data: data[indexArray[0]] });
+      } else {
+        res.send({ data: `Error: can't find user ${req.email}.` });
+      }
+    })
     .catch((err) => res.status(500).send({ message: err }));
 };
