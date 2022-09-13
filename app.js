@@ -7,19 +7,20 @@ const { Joi, errors, celebrate } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const { login, createUser } = require('./controllers/users');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, MONGODB_URI = 'mongodb://localhost:27017/finalDB' } = process.env;
 const app = express();
 
 // connect to the MongoDB server
-mongoose.connect('mongodb://localhost:27017/aroundb');
+mongoose.connect(MONGODB_URI)
+  .catch((err) => {
+    console.log(err);
+  });
 
 require('dotenv').config();
 
-// console.log(process.env.NODE_ENV);
-
 // include these before other routes
-app.use(cors());
 app.options('*', cors());
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,14 +32,16 @@ app.use('/', require('./routes/articles'));
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email(),
+    email: Joi.string().email().required(),
     password: Joi.string().required().min(8),
   }),
 }), login);
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email(),
+    username: Joi.string().required().min(2)
+      .max(30),
+    email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   }),
 }), createUser);
