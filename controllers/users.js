@@ -78,3 +78,11 @@ module.exports.getCurrentUser = (req, res) => {
     })
     .catch((err) => res.status(500).send({ message: err }));
 };
+
+module.exports.getUsers = (req, res) => {
+  console.log('Get users Function');
+  User.find()
+    .orFail()
+    .then((data) => res.send({ data: data }))
+    .catch((err) => res.status(500).send({ message: err }));
+};
