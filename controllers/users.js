@@ -8,9 +8,9 @@ const NotFoundError = require('../errors/NotFoundError');
 // POST /signup
 module.exports.createUser = (req, res) => {
   console.log("Create user Function");
-  const { name, about, avatar } = req.body;
+  const { email, password, username } = req.body;
 
-  User.create({ name, about, avatar })
+  User.create({ email, password, username })
     .then((user) => {
       res.send({ data: user });
     })
