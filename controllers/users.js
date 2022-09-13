@@ -10,7 +10,7 @@ const NotFoundError = require('../errors/NotFoundError');
 // ? req.body = {email: (STRING), password: (STRING), username: (STRING)}
 module.exports.createUser = (req, res) => {
   bcrypt.hash(req.body.password, 10)
-    .then((hash) => User.create({
+    .then((hash) => User.insertOne({
       email: req.body.email,
       password: hash, // adding the hash to the database
       username: req.body.username,
