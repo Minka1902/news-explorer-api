@@ -61,7 +61,7 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log("Get current user Function");
-  User.findOne({email: req.email})
+  User.find()
     .orFail()
     .then((users) => res.send({ data: users }))
     .catch((err) => res.status(500).send({ message: err }));
