@@ -7,6 +7,7 @@ const NotFoundError = require('../errors/NotFoundError');
 // email, password, and name in the body
 // POST /signup
 module.exports.createUser = (req, res) => {
+  console.log("Create user Function");
   const { name, about, avatar } = req.body;
 
   User.create({ name, about, avatar })
@@ -34,6 +35,7 @@ module.exports.createUser = (req, res) => {
 // and returns a JWT
 // POST /signin
 module.exports.login = (req, res, next) => {
+  console.log("Login Function");
   const { email, password } = req.body;
 
   User.findOne({ email }).select('+password')
@@ -58,6 +60,7 @@ module.exports.login = (req, res, next) => {
 // returns information about the logged-in user (email and name)
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
+  console.log("Get current user Function");
   User.find({})
     .orFail()
     .then((users) => res.send({ data: users }))
