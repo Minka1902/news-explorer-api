@@ -22,11 +22,14 @@ module.exports.createUser = (req, res) => {
       }
     });
   bcrypt.hash(req.body.password, 10)
-    .then((hash) => User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: hash // adding the hash to the database,
-    }))
+    .then((hash) => {
+      console.log(`HASH worked! hash: ${hash}`);
+      User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: hash // adding the hash to the database,
+      });
+    })
     .then((user) => res.send(user))
     .catch((err) => res.status(400).send(err));
 };
