@@ -23,8 +23,9 @@ module.exports.createUser = (req, res) => {
     });
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
+      username: req.body.username,
       email: req.body.email,
-      password: hash, // adding the hash to the database
+      password: hash // adding the hash to the database,
     }))
     .then((user) => res.send(user))
     .catch((err) => res.status(400).send(err));
@@ -42,9 +43,10 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
+      } else {
+        res.send(user);
+        return bcrypt.compare(password, user.password);
       }
-      res.send(user);
-      return bcrypt.compare(password, user.password);
     })
     .then((matched) => {
       if (!matched) {
@@ -52,7 +54,7 @@ module.exports.login = (req, res, next) => {
         return Promise.reject(new Error('Incorrect password or email'));
       }
       // successful authentication
-      return res.send({ message: `Everything good!` });
+      return res.send({ message: 'Everything good!' });
     })
     .catch(next);
 };
@@ -64,26 +66,6 @@ module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
   User.find()
     .orFail()
-    .then((data) => {
-      const indexArray = [];
-      for (let i = 0; i < data.length; i += 1) {
-        if (req.email === data[i]) {
-          indexArray[indexArray.length] = i;
-        }
-      }
-      if (indexArray.length === 0) {
-        res.send({ data: data[indexArray[0]] });
-      } else {
-        res.send({ data: `Error: can't find user ${req.email}.` });
-      }
-    })
-    .catch((err) => res.status(500).send({ message: err }));
-};
-
-module.exports.getUsers = (req, res) => {
-  console.log('Get users Function');
-  User.find()
-    .orFail()
-    .then((data) => res.send({ data: data }))
+    .then((users) => res.send({ data: users }))
     .catch((err) => res.status(500).send({ message: err }));
 };
