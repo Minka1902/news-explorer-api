@@ -43,6 +43,7 @@ module.exports.login = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
       }
+      res.send(user);
       return bcrypt.compare(password, user.password);
     })
     .then((matched) => {
@@ -51,7 +52,7 @@ module.exports.login = (req, res, next) => {
         return Promise.reject(new Error('Incorrect password or email'));
       }
       // successful authentication
-      return res.send({ message: 'Everything good!' });
+      return res.send({ message: `Everything good!` });
     })
     .catch(next);
 };
