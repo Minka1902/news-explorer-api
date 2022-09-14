@@ -23,7 +23,7 @@ module.exports.createUser = (req, res) => {
     });
   bcrypt.hash(req.body.password, 10)
     .then((hash) => {
-      console.log(`HASH worked! hash: ${req.body}`);
+      console.log(`HASH worked! req: ${req.body}`);
       User.create({
         username: req.body.username,
         email: req.body.email,
