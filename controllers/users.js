@@ -10,17 +10,6 @@ module.exports.createUser = (req, res) => {
   console.log('Create user Function');
   const { email, password, username } = req.body;
 
-  bcrypt.hash(req.body.password, 10)
-    .then((hash) => {
-      console.log(`hash: ${hash}`);
-      User.create({
-        username: req.body.username,
-        email: req.body.email,
-        password: hash // adding the hash to the database,
-      });
-    })
-    .then((user) => res.send(user))
-    .catch((err) => res.status(400).send(err));
   User.create({ email, password, username })
     .then((user) => {
       console.log(user)
@@ -33,6 +22,17 @@ module.exports.createUser = (req, res) => {
         res.status(500).send(err);
       }
     });
+  bcrypt.hash(req.body.password, 10)
+    .then((hash) => {
+      console.log(`hash: ${hash}`);
+      User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: hash // adding the hash to the database,
+      });
+    })
+    .then((user) => res.send(user))
+    .catch((err) => res.status(400).send(err));
   console.log(req.body.password);
 };
 
