@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     minLength: 2,
     maxLength: 30,
   },
+  savedArticles: [{
+    type: String,
+    required: false,
+  }],
 });
 
 module.exports = mongoose.model('users', userSchema);

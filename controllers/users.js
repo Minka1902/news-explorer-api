@@ -56,10 +56,11 @@ module.exports.login = (req, res, next) => {
     .then((matched) => {
       if (!matched) {
         // the hashes didn't match, rejecting the promise
+        console.log(matched);
         return Promise.reject(new Error('Incorrect password or email'));
       }
       // successful authentication
-      return res.send({ message: 'Everything good!' });
+      return res.send({ message: `Everything good! ${matched}` });
     })
     .catch(next);
 };
