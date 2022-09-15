@@ -59,7 +59,6 @@ module.exports.login = (req, res, next) => {
         return Promise.reject(new Error('Incorrect password or email'));
       }
       // successful authentication
-      console.log(matched);
       return res.send({ message: 'Everything good!' });
     })
     .catch(next);
