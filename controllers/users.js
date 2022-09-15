@@ -15,9 +15,11 @@ module.exports.createUser = (req, res) => {
       res.send({ data: user });
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'ValidationError' && !res.headersSent) {
+        console.log(err.name);
         res.status(400).send(err);
       } else {
+        console.log(err.name);
         res.status(500).send(err);
       }
     });
