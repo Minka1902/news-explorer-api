@@ -15,17 +15,17 @@ module.exports.createUser = (req, res) => {
       console.log(user)
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' && !res.headersSent) {
-        console.log(err.name);
+      if (err.name === 'ValidationError') {
         res.status(400).send(err);
       } else {
         console.log(err.name);
         res.status(500).send(err);
       }
     });
+  console.log(req.body.password);
   bcrypt.hash(req.body.password, 10)
     .then((hash) => {
-      console.log(`HASH worked! req: ${req.body}`);
+      console.log(`hash: ${hash}`);
       User.create({
         username: req.body.username,
         email: req.body.email,
@@ -49,7 +49,7 @@ module.exports.login = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
       } else {
-        res.send({_id: user._id, email: user.email, username: user.username});
+        // return res.send({_id: user._id, email: user.email, username: user.username});
         return bcrypt.compare(password, user.password);
       }
     })
@@ -59,6 +59,7 @@ module.exports.login = (req, res, next) => {
         return Promise.reject(new Error('Incorrect password or email'));
       }
       // successful authentication
+      console.log(matched);
       return res.send({ message: 'Everything good!' });
     })
     .catch(next);
