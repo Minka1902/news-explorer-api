@@ -10,18 +10,6 @@ module.exports.createUser = (req, res) => {
   console.log('Create user Function');
   const { email, password, username } = req.body;
 
-  User.create({ email, password, username })
-    .then((user) => {
-      console.log(user)
-    })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(400).send(err);
-      } else {
-        console.log(err.name);
-        res.status(500).send(err);
-      }
-    });
   bcrypt.hash(req.body.password, 10)
     .then((hash) => {
       console.log(`hash: ${hash}`);
@@ -33,7 +21,18 @@ module.exports.createUser = (req, res) => {
     })
     .then((user) => res.send(user))
     .catch((err) => res.status(400).send(err));
-  console.log(req.body.password);
+  User.create({ email, password, username })
+    .then((user) => {
+      res.send({data: user});
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send(err);
+      } else {
+        console.log(err.name);
+        res.status(500).send(err);
+      }
+    });
 };
 
 // ////////////////////////////////////////////////////////////////
