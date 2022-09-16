@@ -38,7 +38,7 @@ module.exports.createArticle = (req, res) => {
       res.send({ data: article });
     })
     .catch((err) => {
-      checkError(err, res, req);
+      handleError(err, res, req);
     });
 };
 
@@ -52,6 +52,6 @@ module.exports.getArticles = (req, res) => {
     .orFail()
     .then((articles) => res.send({ data: articles }))
     .catch((err) => {
-      checkError(err, res, req);
+      handleError(err, res, req);
     });
 };
