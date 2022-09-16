@@ -1,9 +1,9 @@
 const Article = require('../models/article');
-const { checkError } = require('../errors/ErrorHandler');
+const { handleError } = require('../errors/ErrorHandler');
 
 // ////////////////////////////////////////////////////////////////
 // get's an article ID and deletes the article
-// DELETE /articles
+// DELETE /articles/:id
 // ! request structure
 // ? req.body = {articleId: "article ID"}
 module.exports.deleteArticle = (req, res) => {
@@ -17,13 +17,13 @@ module.exports.deleteArticle = (req, res) => {
       }
     })
     .catch((err) => {
-      checkError(err, res, req);
+      handleError(err, res, req);
     });
 };
 
 // ////////////////////////////////////////////////////////////////
 // get's an article ID and deletes the article
-// DELETE /articles
+// POST /articles
 // ! request structure
 // ? req.body={keyword, title, text, date:(DATE), source, link:(URL), image:(URL), owner:(ID)}
 module.exports.createArticle = (req, res) => {
