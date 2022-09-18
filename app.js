@@ -61,5 +61,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Linked to server,');
+  console.log('Linked to server, minka-1');
 });
