@@ -7,7 +7,7 @@ class ErrorHandler extends Error {
 }
 
 const checkError = (err, req, res, next) => {
-  if(res && err){
+  if (res && err) {
     if (err.name === 'CastError') {
       res.status(400).send({ message: 'NotValid Data' });
     } if (err.name === 'DocumentNotFoundError') {
@@ -15,9 +15,7 @@ const checkError = (err, req, res, next) => {
     } if (err.name === 'ForbiddenError') {
       res.status(403).send({ message: 'Can`t delete article' });
     } else {
-      if(res){
-        res.status(500).send({ message: 'An error has occurred on the server' });
-      }
+      res.send({ message: 'An error has occurred on the server' });
     }
   }
   next();
