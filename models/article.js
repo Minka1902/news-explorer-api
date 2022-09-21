@@ -42,7 +42,7 @@ const articleSchema = new mongoose.Schema({
       message: 'Invalid URL.',
     },
   },
-  owner: {
+  ownerId: {
     type: mongoose.Types.ObjectId,
     select: false,
   },
