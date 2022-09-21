@@ -18,7 +18,7 @@ const checkError = (err, req, res, next) => {
       res.status(500).send({ message: 'An error has occurred on the server' });
     }
   }
-  next();
+  next;
 };
 
 const handleError = (err, req, res, next) => {
