@@ -6,7 +6,7 @@ class ErrorHandler extends Error {
   }
 }
 
-const checkError = (err, req, res, next) => {
+const checkError = (err, req, res) => {
   if (err.name === 'CastError') {
     res.status(400).send({ message: 'NotValid Data' });
   } if (err.name === 'DocumentNotFoundError') {
@@ -16,8 +16,6 @@ const checkError = (err, req, res, next) => {
   } else {
     res.status(500).send({ message: 'An error has occurred on the server' });
   }
-
-  next();
 };
 
 const handleError = (err, req, res, next) => {
