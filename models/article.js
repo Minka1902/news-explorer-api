@@ -14,11 +14,11 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  text: {
+  content: {
     type: String,
     required: true,
   },
-  date: {
+  publishedAt: {
     type: String,
     required: true,
   },
@@ -34,7 +34,7 @@ const articleSchema = new mongoose.Schema({
       message: 'Invalid URL.',
     },
   },
-  image: {
+  urlToImage: {
     type: String,
     required: true,
     validate: {

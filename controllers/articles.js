@@ -28,11 +28,11 @@ module.exports.deleteArticle = (req, res) => {
 // ? req.body={keyword, title, text, date:(DATE), source, link:(URL), image:(URL), owner:(ID)}
 module.exports.createArticle = (req, res) => {
   const {
-    keyword, title, text, date, source, link, image, ownerId,
+    keyword, title, content, publishedAt, source, link, urlToImage, ownerId,
   } = req.body;
 
   Article.create({
-    keyword, title, text, date, source, link, image, ownerId,
+    keyword, title, content, publishedAt, source, link, urlToImage, ownerId,
   })
     .then((article) => {
       res.send({ data: article });
