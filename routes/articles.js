@@ -12,7 +12,7 @@ router.post('/articles', celebrate({
     author: Joi.string().max(60),
     title: Joi.string().required().min(2),
     content: Joi.string().required().min(2),
-    urlToImage: Joi.date().required(),
+    publishedAt: Joi.date().required(),
     source: Joi.string().required(),
     link: Joi.string().required().uri(),
     urlToImage: Joi.string().required().uri(),
