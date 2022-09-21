@@ -16,8 +16,8 @@ module.exports.deleteArticle = (req, res) => {
         res.status(403).send({ message: 'Error, unable to delete the article!' });
       }
     })
-    .catch((err) => {
-      handleError(err, req, res);
+    .catch((err, next) => {
+      handleError(err, req, res, next);
     });
 };
 
@@ -37,8 +37,8 @@ module.exports.createArticle = (req, res) => {
     .then((article) => {
       res.send({ data: article });
     })
-    .catch((err) => {
-      handleError(err, req, res);
+    .catch((err, next) => {
+      handleError(err, req, res, next);
     });
 };
 
@@ -51,7 +51,7 @@ module.exports.getArticles = (req, res) => {
   Article.find({})
     .orFail()
     .then((articles) => res.send({ articles }))
-    .catch((err) => {
-      handleError(err, req, res);
+    .catch((err, next) => {
+      handleError(err, req, res, next);
     });
 };

@@ -15,7 +15,7 @@ const checkError = (err, req, res, next) => {
     } if (err.name === 'ForbiddenError') {
       res.status(403).send({ message: 'Can`t delete article' });
     } else {
-      res.send({ message: 'An error has occurred on the server' });
+      res.status(500).send({ message: 'An error has occurred on the server' });
     }
   }
   next();
