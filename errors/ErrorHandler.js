@@ -15,8 +15,9 @@ const checkError = (err, req, res, next) => {
     } if (err.name === 'ForbiddenError') {
       res.status(403).send({ message: 'Can`t delete article' });
     } else {
-      console.log(`res: ${res.ok}`);
-      res.status(500).send({ message: 'An error has occurred on the server' });
+      if(res){
+        res.status(500).send({ message: 'An error has occurred on the server' });
+      }
     }
   }
   next();
@@ -26,4 +27,4 @@ const handleError = (err, req, res, next) => {
   checkError(err, req, res, next);
 };
 
-module.exports = { ErrorHandler, handleError };
+module.exports = { handleError };
