@@ -17,7 +17,7 @@ module.exports.deleteArticle = (req, res) => {
       }
     })
     .catch((err) => {
-      handleError(err, res, req);
+      handleError(err, req, res);
     });
 };
 
@@ -38,7 +38,7 @@ module.exports.createArticle = (req, res) => {
       res.send({ data: article });
     })
     .catch((err) => {
-      handleError(err, res, req);
+      handleError(err, req, res);
     });
 };
 
@@ -52,6 +52,6 @@ module.exports.getArticles = (req, res) => {
     .orFail()
     .then((articles) => res.send({ articles }))
     .catch((err) => {
-      handleError(err, res, req);
+      handleError(err, req, res);
     });
 };
