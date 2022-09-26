@@ -9,6 +9,7 @@ const articleSchema = new mongoose.Schema({
   author:{
     type: String,
     required: false,
+    select: true,
   },
   title: {
     type: String,
@@ -40,7 +41,7 @@ const articleSchema = new mongoose.Schema({
   },
   ownerId: {
     type: mongoose.Types.ObjectId,
-    select: false,
+    select: true,
     required: true,
   },
   source: {
