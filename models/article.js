@@ -41,6 +41,7 @@ const articleSchema = new mongoose.Schema({
   ownerId: {
     type: mongoose.Types.ObjectId,
     select: false,
+    required: true,
   },
   source: {
     type: String,
