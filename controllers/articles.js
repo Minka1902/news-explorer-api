@@ -25,14 +25,14 @@ module.exports.deleteArticle = (req, res) => {
 // get's an article ID and deletes the article
 // POST /articles
 // ! request structure
-// ? req.body={keyword, title, text, date:(DATE), source, link:(URL), image:(URL), owner:(ID)}
+// ? req.body={keyword, author, title, content, publishedAt:(DATE), source, link:(URL), urlToImage:(URL), ownerId:(ID)}
 module.exports.createArticle = (req, res) => {
   const {
-    keyword, title, content, publishedAt, source, link, urlToImage, ownerId,
+    keyword, author, title, content, publishedAt, link, urlToImage, ownerId, source,
   } = req.body;
 
   Article.create({
-    keyword, title, content, publishedAt, source, link, urlToImage, ownerId,
+    keyword, author, title, content, publishedAt, link, urlToImage, ownerId, source,
   })
     .then((article) => {
       res.send({ data: article });
