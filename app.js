@@ -61,5 +61,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Linked to server, ownerID: required = true');
+  console.log('Linked to server, Good Luck!');
 });
