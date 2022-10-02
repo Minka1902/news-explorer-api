@@ -7,7 +7,7 @@ const { handleError } = require('../errors/ErrorHandler');
 // ! request structure
 // ? req.body = {articleId: "article ID"}
 module.exports.deleteArticle = (req, res) => {
-  Article.findByIdAndRemove(req.params.id)
+  Article.findByIdAndDelete(req.params.id)
     .orFail()
     .then((article) => {
       if (req.user._id.toString() === article.owner) {
