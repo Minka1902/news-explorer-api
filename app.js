@@ -57,5 +57,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Linked to server, Trying to solve app.js:56:6');
+  console.log(`Linked to server ${PORT}, Good luck`);
 });
