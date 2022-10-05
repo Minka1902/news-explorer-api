@@ -50,7 +50,7 @@ module.exports.createArticle = (req, res) => {
 module.exports.getArticles = (req, res) => {
   Article.find({})
     .orFail()
-    .then((articles) => res.send({ articles }))
+    .then((articles) => res.send(articles))
     .catch((err) => {
       handleError(err, req, res);
     });
