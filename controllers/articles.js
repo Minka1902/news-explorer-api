@@ -11,6 +11,7 @@ module.exports.deleteArticle = (req, res) => {
     .orFail()
     .then((article) => {
       console.log(`article = ${article}`);
+      console.log(`if(req.user._id.toString() === article.ownerId) = ${req.user._id.toString() === article.ownerI}`)
       if (req.user._id.toString() === article.ownerId) {
         res.send({ data: article });
       } else {
