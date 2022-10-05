@@ -48,6 +48,7 @@ module.exports.login = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
       } else {
+        console.log(`user password = ${user.password}`);
         res.send({_id: user._id, email: user.email, username: user.username, savedArticles: user.savedArticles});
         return bcrypt.compare(password, user.password);
       }
@@ -55,7 +56,7 @@ module.exports.login = (req, res, next) => {
     .then((matched) => {
       if (!matched) {
         // the hashes didn't match, rejecting the promise
-        console.log(`matched: ${matched}`);
+        console.log(`matched = ${matched}`);
         return Promise.reject(new Error('Incorrect password or email'));
       }
       // successful authentication

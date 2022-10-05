@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
     maxLength: 30,
   },
   savedArticles: [{
-    type: String,
     required: false,
   }],
 });
