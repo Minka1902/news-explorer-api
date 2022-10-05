@@ -10,7 +10,8 @@ module.exports.deleteArticle = (req, res) => {
   Article.findByIdAndRemove(req.params.id)
     .orFail()
     .then((article) => {
-      if (req.user._id.toString() === article.owner) {
+      console.log(`article = ${article}`);
+      if (req.user._id.toString() === article.ownerId) {
         res.send({ data: article });
       } else {
         res.status(403).send({ message: 'Error, unable to delete the article!' });
@@ -35,7 +36,7 @@ module.exports.createArticle = (req, res) => {
     keyword, author, title, content, publishedAt, url, urlToImage, ownerId, source,
   })
     .then((article) => {
-      res.send({ data: article });
+      res.send(article);
     })
     .catch((err) => {
       handleError(err, req, res);
