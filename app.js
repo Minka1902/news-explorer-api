@@ -52,14 +52,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ! last app.use if need to add another one do it above
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  res.status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? 'An error occurred on the server'
-        : message,
-    });
+  res.status(statusCode).send({ message: statusCode === 500 ? 'An error occurred on the server' : message });
 });
 
 app.listen(PORT, () => {
-  console.log('Linked to server, Good Luck!');
+  console.log('Linked to server, Trying to solve app.js:56:6');
 });
