@@ -64,6 +64,7 @@ module.exports.login = (req, res, next) => {
 
   User.findOne({ email }).select('password')
     .then((user) => {
+      console.log(`user: ${user}`);
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
       } else {
@@ -74,8 +75,7 @@ module.exports.login = (req, res, next) => {
               return Promise.reject(new Error('Incorrect password or email'));
             }
             // successful authentication
-            const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
-            return res.send({ jwt: token, name: user.name });
+            return res.send(user);
           })
       }
     })
@@ -87,13 +87,19 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  console.log(`req: ${req.user}`);
   const { _id } = req;
   console.log(`user id: ${_id}`);
-  User.findById(req._id)
-    .orFail()
-    .then((user) => {
-      res.send({ email: user.email, name: user.name });
-    })
-    .catch((err) => res.status(500).send({ message: err }));
+  User.findById(req._id, function (err, docs) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log("Result : ", docs);
+    }
+  })
+  // .orFail()
+  // .then((user) => {
+  //   res.send({ email: user.email, name: user.name });
+  // })
+  // .catch((err) => res.status(500).send({ message: err }));
 };
