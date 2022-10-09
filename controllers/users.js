@@ -87,12 +87,12 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  // const { _id: userId } = req.user._id;
-  console.log(`req.user: ${req.body._id}, userID: `);
+  const userId = req.body._id;
+
   User.findById(userId)
     .then((user) => {
       console.log(`user: ${user}`);
-      // res.send({ email: user.email, name: user.name, savedArticles: [] });
+      res.send({ email: user.email, name: user.name, savedArticles: [] });
     })
     .catch(next);
 };
