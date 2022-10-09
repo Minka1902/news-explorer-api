@@ -91,8 +91,7 @@ module.exports.getCurrentUser = (req, res) => {
 
   User.findById(userId)
     .then((user) => {
-      console.log(`user: ${user}`);
-      res.send({ email: user.email, name: user.name, savedArticles: [] });
+      res.send(user);
     })
     .catch(next);
 };
