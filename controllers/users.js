@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 // ////////////////////////////////////////////////////////////////
 // creates a user with the passed
@@ -64,17 +65,18 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
-        return;
+      } else {
+        bcrypt.compare(password, user.password)
+          .then((matched) => {
+            if (!matched) {
+              // the hashes didn't match, rejecting the promise
+              return Promise.reject(new Error('Incorrect password or email'));
+            }
+            // successful authentication
+            const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+            return res.send({ jwt: token, name: user.name });
+          })
       }
-      bcrypt.compare(password, user.password)
-        .then((matched) => {
-          if (!matched) {
-            // the hashes didn't match, rejecting the promise
-            return Promise.reject(new Error('Incorrect password or email'));
-          }
-          // successful authentication
-          return res.send(user);
-        })
     })
     .catch(next);
 };
