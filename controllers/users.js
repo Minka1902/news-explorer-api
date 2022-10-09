@@ -64,18 +64,17 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
-      } else {
-        return bcrypt.compare(password, user.password);
+        return;
       }
-    })
-    .then((matched) => {
-      if (!matched) {
-        // the hashes didn't match, rejecting the promise
-        return Promise.reject(new Error('Incorrect password or email'));
-      }
-      // successful authentication
-      console.log(`user: ${user}`);
-      return res.send({ message: `Everything good!`, name: user.name, email: user.email });
+      bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            // the hashes didn't match, rejecting the promise
+            return Promise.reject(new Error('Incorrect password or email'));
+          }
+          // successful authentication
+          return res.send(user);
+        })
     })
     .catch(next);
 };
