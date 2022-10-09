@@ -90,7 +90,8 @@ module.exports.getCurrentUser = (req, res) => {
   const { _id: userId } = req.param._id;
   User.findById(userId)
     .then((user) => {
-      res.send({ email: user.email, name: user.name, savedArticles: [] });
+      console.log(`user: ${user}`);
+      // res.send({ email: user.email, name: user.name, savedArticles: [] });
     })
     .catch(next);
 };
