@@ -87,19 +87,10 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  const { _id } = req;
-  console.log(`user id: ${_id}`);
-  User.findById(req._id, function (err, docs) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      console.log("Result : ", docs);
-    }
-  })
-  // .orFail()
-  // .then((user) => {
-  //   res.send({ email: user.email, name: user.name });
-  // })
-  // .catch((err) => res.status(500).send({ message: err }));
+  const { _id: userId } = req.user;
+  User.findById(userId)
+    .then((user) => {
+      res.send({ email: user.email, name: user.name, savedArticles: [] });
+    })
+    .catch(next);
 };
