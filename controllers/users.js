@@ -91,8 +91,7 @@ module.exports.getCurrentUser = (req, res) => {
 
   User.findById(userId)
     .then((user) => {
-      console.log(`user: ${user}`);
-      res.send({ data: user });
+      res.send({ user: user });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
