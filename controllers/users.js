@@ -9,6 +9,19 @@ const NotFoundError = require('../errors/NotFoundError');
 module.exports.createUser = (req, res) => {
   console.log('Create user Function');
   const { email, password, username } = req.body;
+
+  // User.create({ email, password, username })
+  // .then((user) => {
+  //   res.send({data: user});
+  // })
+  // .catch((err) => {
+  //   if (err.name === 'ValidationError') {
+  //     res.status(400).send(err);
+  //   } else {
+  //     console.log(err.name);
+  //     res.status(500).send(err);
+  //   }
+  // });
   bcrypt.hash(password, 10)
     .then((hash) => {
       console.log(`hash: ${hash}`);
@@ -52,11 +65,12 @@ module.exports.login = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
       } else {
-        // res.send({ _id: user._id, email: user.email, username: user.username, savedArticles: user.savedArticles });
+        res.send({ _id: user._id, email: user.email, username: user.username, savedArticles: user.savedArticles });
         return bcrypt.compare(password, user.password);
       }
     })
     .then((matched) => {
+      console.log(`matched = ${matched}`);
       if (!matched) {
         // the hashes didn't match, rejecting the promise
         return Promise.reject(new Error('Incorrect password or email'));
