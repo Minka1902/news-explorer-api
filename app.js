@@ -57,5 +57,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Linked to server ${PORT}, Good luck`);
+  console.log(`Linked to server ${PORT}, Good luck!`);
 });
