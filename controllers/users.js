@@ -94,5 +94,11 @@ module.exports.getCurrentUser = (req, res) => {
       console.log(`user: ${user}`);
       res.send({ data: user });
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send(err);
+      } else {
+        res.status(500).send(err);
+      }
+    });
 };
