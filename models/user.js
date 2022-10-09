@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    select: false,
     validate: {
       validator: isEmail,
       message: 'Email is not valid.',
