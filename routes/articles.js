@@ -20,6 +20,6 @@ router.post('/articles', celebrate({
   }),
 }), createArticle);
 
-router.delete('/articles/:id', deleteArticle);
+router.delete('/articles/(:id)', deleteArticle);
 
 module.exports = router;
