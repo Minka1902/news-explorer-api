@@ -87,7 +87,8 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  const { _id: userId } = req.param._id;
+  // const { _id: userId } = req.user._id;
+  console.log(`req.user: ${req.user}, userID: ${req.user._id}`)
   User.findById(userId)
     .then((user) => {
       console.log(`user: ${user}`);
