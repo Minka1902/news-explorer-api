@@ -65,7 +65,6 @@ module.exports.login = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
       } else {
-        res.send({ _id: user._id, email: user.email, username: user.username, savedArticles: user.savedArticles });
         return bcrypt.compare(password, user.password);
       }
     })
@@ -87,7 +86,8 @@ module.exports.login = (req, res, next) => {
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
   const { _id: userId } = req.user;
-  User.findById(userId)
+  console.log(`user id: ${userId}`);
+  User.findById(req.user)
     .orFail()
     .then((user) => {
       res.send({ email: user.email, name: user.name });
