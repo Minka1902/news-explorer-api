@@ -87,7 +87,7 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  const { _id: userId } = req.user;
+  const { _id: userId } = req.param._id;
   User.findById(userId)
     .then((user) => {
       res.send({ email: user.email, name: user.name, savedArticles: [] });
