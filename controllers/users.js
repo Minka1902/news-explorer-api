@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
-const { JWT_SECRET, NODE_ENV } = process.env;
+const { JWT_SECRET = 'gfg_jwt_secret_key' } = process.env;
 
 // ////////////////////////////////////////////////////////////////
 // creates a user with the passed
@@ -14,30 +14,27 @@ module.exports.createUser = (req, res) => {
 
   bcrypt.hash(password, 10)
     .then((hash) => {
-      console.log(`hash: ${hash}`);
       User.create({
         username: username,
         email: email,
         password: hash, // adding the hash to the database
       })
         .then((user) => {
-          res.send({ data: user });
+          return res.send(user);
         })
         .catch((err) => {
           if (err.name === 'ValidationError') {
-            res.status(400).send(err);
+            return res.status(400).send(err);
           } else {
-            console.log(err.name);
-            res.status(500).send(err);
+            return res.status(500).send(err);
           }
         });
     })
-    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send(err);
+        return res.status(400).send(err);
       } else {
-        res.status(500).send(err);
+        return res.status(500).send(err);
       }
     });
 };
@@ -63,13 +60,12 @@ module.exports.login = (req, res, next) => {
               return Promise.reject(new Error('Incorrect password or email'));
             }
 
-            let jwtSecretKey = process.env.JWT_SECRET_KEY;
             let data = {
-              time: new Date(),
+              time: Date(),
               userId: user._id,
             }
 
-            const token = jwt.sign(data, jwtSecretKey);
+            const token = jwt.sign(data, JWT_SECRET);
             // successful authentication
             return res.send({user: user, jwt: token});
           })
@@ -83,15 +79,15 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  const userId = req.body.myId;
+  const userId = req.body.user._id;
 
   User.findById(userId)
     .then((user) => {
-      res.send({ user: user });
+      return res.send({ user: user });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send(err);
+        return res.status(400).send(err);
       }
     });
 };

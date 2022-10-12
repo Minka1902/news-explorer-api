@@ -22,4 +22,4 @@ const handleError = (err, req, res, next) => {
   checkError(err, req, res, next);
 };
 
-module.exports = { handleError };
+module.exports = { handleError, ErrorHandler };

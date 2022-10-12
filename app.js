@@ -7,7 +7,7 @@ const { Joi, errors, celebrate } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const { login, createUser } = require('./controllers/users');
 
-const { PORT = 3000, MONGODB_URI = 'mongodb://localhost:27017/finalDB' } = process.env;
+const { PORT = 3001, MONGODB_URI = 'mongodb://localhost:27017/finalDB' } = process.env;
 const app = express();
 
 // connect to the MongoDB server
@@ -51,9 +51,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ! last app.use if need to add another one do it above
 app.use((err, req, res, next) => {
-  const { status = 500, message } = err;
-  console.log(`Status code: ${status}`);
-  res.status(status).send({ message: status === 500 ? 'An error occurred on the server' : message });
+  const { statusCode = 500, message } = err;
+  console.log(`message: ${message}`);
+  res.status(statusCode).send({ message: message });
 });
 
 app.listen(PORT, () => {
