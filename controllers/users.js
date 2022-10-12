@@ -6,31 +6,19 @@ const { JWT_SECRET, NODE_ENV } = process.env;
 
 // ////////////////////////////////////////////////////////////////
 // creates a user with the passed
-// email, password, and name in the body
+// email, password, and username in the request body
 // POST /signup
 module.exports.createUser = (req, res) => {
   console.log('Create user Function');
   const { email, password, username } = req.body;
 
-  // User.create({ email, password, username })
-  // .then((user) => {
-  //   res.send({data: user});
-  // })
-  // .catch((err) => {
-  //   if (err.name === 'ValidationError') {
-  //     res.status(400).send(err);
-  //   } else {
-  //     console.log(err.name);
-  //     res.status(500).send(err);
-  //   }
-  // });
   bcrypt.hash(password, 10)
     .then((hash) => {
       console.log(`hash: ${hash}`);
       User.create({
         username: username,
         email: email,
-        password: hash // adding the hash to the database,
+        password: hash, // adding the hash to the database
       })
         .then((user) => {
           res.send({ data: user });
@@ -74,8 +62,16 @@ module.exports.login = (req, res, next) => {
               // the hashes didn't match, rejecting the promise
               return Promise.reject(new Error('Incorrect password or email'));
             }
+
+            let jwtSecretKey = process.env.JWT_SECRET_KEY;
+            let data = {
+              time: new Date(),
+              userId: user._id,
+            }
+
+            const token = jwt.sign(data, jwtSecretKey);
             // successful authentication
-            return res.send(user);
+            return res.send({user: user, jwt: token});
           })
       }
     })
