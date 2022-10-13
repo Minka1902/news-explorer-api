@@ -9,7 +9,6 @@ const { JWT_SECRET = 'dev-secret' } = process.env;
 // email, password, and username in the request body
 // POST /signup
 module.exports.createUser = (req, res) => {
-  console.log('Create user Function');
   const { email, password, username } = req.body;
 
   bcrypt.hash(password, 10)
@@ -63,7 +62,6 @@ module.exports.login = (req, res, next) => {
               time: Date(),
               userId: user._id,
             }
-            console.log(`JWT_SECRET: ${JWT_SECRET}`);
             const token = jwt.sign(data, JWT_SECRET);
             // successful authentication
             return res.send({user: user, jwt: token});
@@ -78,11 +76,11 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  const userId = req.user._id;
+  const { userId } = req.user;
 
   User.findById(userId)
     .then((user) => {
-      return res.send({ user: user });
+      return res.send({ id: user._id, email: user.email, username: user.username, savedArticles: [] });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
