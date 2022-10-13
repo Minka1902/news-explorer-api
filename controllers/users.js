@@ -63,7 +63,7 @@ module.exports.login = (req, res, next) => {
               time: Date(),
               userId: user._id,
             }
-
+            console.log(`JWT_SECRET: ${JWT_SECRET}`);
             const token = jwt.sign(data, JWT_SECRET);
             // successful authentication
             return res.send({user: user, jwt: token});
