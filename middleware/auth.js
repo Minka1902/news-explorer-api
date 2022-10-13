@@ -6,7 +6,7 @@ const { NODE_ENV, JWT_SECRET='dev-secret' } = process.env;
 // eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-
+  console.log(`JWT_SECRET: ${JWT_SECRET}`);
   if (!authorization || !authorization.startsWith('Bearer ')) {
     throw new ErrorHandler(401, 'Authorization Required');
   }

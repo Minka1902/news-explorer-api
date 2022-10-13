@@ -49,6 +49,7 @@ module.exports.login = (req, res, next) => {
   User.findOne({ email }).select('password')
     .then((user) => {
       if (!user) {
+        console.log(`JWT_SECRET: ${JWT_SECRET}`);
         throw new NotFoundError('No user with matching ID found');
       } else {
         bcrypt.compare(password, user.password)
