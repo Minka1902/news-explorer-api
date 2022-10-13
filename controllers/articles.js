@@ -10,12 +10,8 @@ module.exports.deleteArticle = (req, res) => {
   Article.findByIdAndRemove(req.params.id)
     .orFail()
     .then((article) => {
-      console.log(`article = ${article}`);
-      console.log(`if(req.user._id.toString() === article.ownerId) = ${req.user._id.toString() === article.ownerId}`)
-      if (req.user._id.toString() === article.ownerId) {
-        res.send({ data: article });
-      } else {
-        res.status(403).send({ message: 'Error, unable to delete the article!' });
+      if (req.user.userId == article.ownerId) {
+        return res.send({ deletedArticle: article });
       }
     })
     .catch((err) => {
@@ -52,7 +48,9 @@ module.exports.createArticle = (req, res) => {
 module.exports.getArticles = (req, res) => {
   Article.find({})
     .orFail()
-    .then((articles) => res.send(articles))
+    .then((articles) => {
+      res.send(articles);
+    })
     .catch((err) => {
       handleError(err, req, res);
     });

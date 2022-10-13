@@ -7,14 +7,16 @@ class ErrorHandler extends Error {
 }
 
 const checkError = (err, req, res) => {
-  if (err.name === 'CastError') {
-    res.status(400).send({ message: 'NotValid Data' });
-  } if (err.name === 'DocumentNotFoundError') {
-    res.status(404).send({ message: 'Article not found like' });
-  } if (err.name === 'ForbiddenError') {
-    res.status(403).send({ message: 'Can`t delete article' });
+  if (err.name == 'CastError') {
+    return res.status(400).send({ message: 'Data invalid.' });
+  } if (err.name == 'DocumentNotFoundError') {
+    return res.status(404).send({ message: 'Article not found.' });
+  } if (err.name == 'ForbiddenError') {
+    return res.status(403).send({ message: 'Can`t delete article.' });
+  }if (err.name == 'ValidationError') {
+    return res.status(422).send({ message: 'Validation error.'});
   } else {
-    res.status(500).send({ message: 'An error has occurred on the server' });
+    return res.status(500).send({ message: 'An error has occurred on the server.' });
   }
 };
 

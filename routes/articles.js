@@ -3,6 +3,7 @@ const router = require('express').Router();
 const {
   createArticle, deleteArticle, getArticles,
 } = require('../controllers/articles');
+const auth = require('../middleware/auth');
 
 router.get('/articles', getArticles);
 
@@ -15,11 +16,11 @@ router.post('/articles', celebrate({
     publishedAt: Joi.date().required(),
     url: Joi.string().required().uri(),
     urlToImage: Joi.string().required().uri(),
-    ownerId: Joi.string().required().min(23).max(25),
+    ownerId: Joi.string().required().min(24).max(24),
     source: Joi.string().required(),
   }),
 }), createArticle);
 
-router.delete('/articles/(:id)', deleteArticle);
+router.delete('/articles/:id', auth, deleteArticle);
 
 module.exports = router;
