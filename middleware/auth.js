@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
     throw new ErrorHandler(401, 'Authorization Required');
   }
 
+  // const token = authorization;
   const token = authorization.replace('Bearer ', '');
   let payload;
 

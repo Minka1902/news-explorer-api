@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
-const { JWT_SECRET = 'gfg_jwt_secret_key' } = process.env;
+const { JWT_SECRET = 'dev-secret' } = process.env;
 
 // ////////////////////////////////////////////////////////////////
 // creates a user with the passed
@@ -49,7 +49,6 @@ module.exports.login = (req, res, next) => {
 
   User.findOne({ email }).select('password')
     .then((user) => {
-      console.log(`user: ${user}`);
       if (!user) {
         throw new NotFoundError('No user with matching ID found');
       } else {
@@ -79,7 +78,7 @@ module.exports.login = (req, res, next) => {
 // GET /users/me
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
-  const userId = req.body.user._id;
+  const userId = req.user._id;
 
   User.findById(userId)
     .then((user) => {
