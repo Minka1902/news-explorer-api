@@ -7,12 +7,13 @@ const { handleError } = require('../errors/ErrorHandler');
 // ! request structure
 // ? req.body = {articleId: "article ID"}
 module.exports.deleteArticle = (req, res) => {
-  Article.findByIdAndRemove(req.params.id)
+  Article.findByIdAndRemove(req.params.deletedArticleId)
     .orFail()
     .then((article) => {
-      if (req.user.userId == article.ownerId) {
+      if (req.userId == article.ownerId) {
         return res.send({ deletedArticle: article });
       }
+      return;
     })
     .catch((err) => {
       handleError(err, req, res);
