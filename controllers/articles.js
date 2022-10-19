@@ -10,6 +10,7 @@ module.exports.deleteArticle = (req, res) => {
   Article.findByIdAndRemove(req.params.deletedArticleId)
     .orFail()
     .then((article) => {
+      console.log(req.userId);
       if (req.userId == article.ownerId) {
         return res.send({ deletedArticle: article });
       }
