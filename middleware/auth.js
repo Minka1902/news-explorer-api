@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
   } catch (err) {
     next();
   }
-  console.log(`payload: ${payload}`); // ! DEL
+  console.log(`payload: ${payload.userId}`); // ! DEL
   req.userId = payload.userId;
   console.log(`req.userId: ${req.userId}`); // ! DEL
   next();
