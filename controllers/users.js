@@ -6,8 +6,10 @@ const { JWT_SECRET = 'dev-secret' } = process.env;
 
 // ////////////////////////////////////////////////////////////////
 // creates a user with the passed
-// email, password, and username in the request body
+// email, password, and username.
 // POST /signup
+// ! request structure
+// ? req.body = {email, password, username}
 module.exports.createUser = (req, res) => {
   const { email, password, username } = req.body;
 
@@ -39,9 +41,11 @@ module.exports.createUser = (req, res) => {
 };
 
 // ////////////////////////////////////////////////////////////////
-// checks the email and password passed in the body
+// checks the email and password
 // and returns a JWT
 // POST /signin
+// ! request structure
+// ? req.body = {email, password}
 module.exports.login = (req, res, next) => {
   console.log('Login Function');
   const { email, password } = req.body;
@@ -74,6 +78,8 @@ module.exports.login = (req, res, next) => {
 // ////////////////////////////////////////////////////////////////
 // returns information about the logged-in user (email and name)
 // GET /users/me
+// ! request structure
+// ? req.userId = USER ID
 module.exports.getCurrentUser = (req, res) => {
   console.log('Get current user Function');
   const { userId } = req;
